@@ -1,8 +1,9 @@
 class Tree:
 
-    def __init__(self,attribute,leaf):
-        self.isLeaf = leaf
-        self.attribute = attribute
+    def __init__(self, attribute, isLeaf):
+        self.isLeaf = isLeaf
+        self.attribute = attribute # This variable represent the attribute name on a non-leaf node
+                                   # and a the decision result on a leaf node.
         self.values = []
         self.trees = []
     
@@ -15,3 +16,4 @@ class Tree:
         while i < len(self.values) and value != self.values[i]:
             i = i + 1
         return None if i == len(self.values) else self.trees[i]
+    

@@ -12,7 +12,7 @@ def entropia(x):
     for i in x:
         d[i] = d[i] + 1
     
-    for key,value in d.items():
+    for _,value in d.items():
         prob = value/totalValues
         res = res - (prob * log(prob))
     return res
@@ -39,7 +39,6 @@ def entropiaRelativa(values, s, listOcurrencias):
     return res
 
 def ganancia(values, s):
-    print(values)
     resultado = 0
     nValues = len(values)
 

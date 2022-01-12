@@ -3,6 +3,9 @@ class Table:
     def __init__(self, table):
         self.values = table
 
+    def numAttributes(self,validRows, validCols):
+        return validCols.count(True)
+
     def printTable(self, validRows, validCols):
         for i in range(0, len(self.values)):
             for j in range(0, len(self.values[i])):
@@ -13,13 +16,12 @@ class Table:
         res = []
         numOnes = 0
         idx = 0
-        while idx < len(self.values) and numOnes == x:
+        while idx < len(validCols) and numOnes != x:
             if validCols[idx]:
                 numOnes = numOnes + 1
             idx = idx + 1
-        if idx == len(self.values):
+        if idx == len(validCols):
             raise IndexError()
-        print("indice:", idx)
         for i in range(0, len(self.values)):
             if validRows[i]:
                 res.append(self.values[i][idx])
