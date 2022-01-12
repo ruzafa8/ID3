@@ -1,26 +1,19 @@
 from table import Table
 import mathematics as math
+from tree import Tree
+import numpy as np
+import csv
 
-numAttributes = 2
-#x = Table(askForTable(2))
-x = Table([
-    ["alta","alto","alto", "no", "no", "si"],
-    ["alta","alto","alto", "si", "no", "si"],
-    ["baja","alto","alto", "no", "no", "si"],
-    ["media","alto","bajo", "no", "si", "no"],
-    ["media","bajo","alto", "si", "si", "no"],
-    ["baja","bajo","alto", "si", "si", "si"],
-    ["alta","bajo","alto", "si", "no", "si"],
-    ["alta","bajo","alto", "no", "si", "si"],
-    ["alta","alto","bajo", "si", "si", "no"],
-    ["baja","bajo","bajo", "si", "si", "si"],
-    ["media","bajo","alto", "si", "si", "si"],
-    ["alta","bajo","bajo", "si", "si", "no"],
-    ["baja","alto","alto", "si", "si", "si"],
-    ["baja","alto","bajo", "no", "no", "si"]
-])
-x.printTable()
-targetAttribute = x.getCol(5)
+reader = csv.reader(open("table.csv","rt"), delimiter=",")
+read = list(reader)
+
+table = Table(read)
+
+validRows = [True] * len(read)
+validCols = [True] * len(read[0])
+
+table.printTable(validRows,validCols)
+targetAttribute = table.getDecisionCol(validRows,validCols)
 
 print("Última columna: ", end="")
 print(targetAttribute)
@@ -28,10 +21,24 @@ print(targetAttribute)
 print("E(S) = ", end="")
 print(math.entropia(targetAttribute))
 
-print("G(F1) = ", end="")
-print(math.entropiaRelativa(x.getCol(0),targetAttribute))
+#print("G(F1) = ", end="")
+#print(math.ganancia(x.getCol(0,validRows,validCols),targetAttribute))
+for i in range(6):
+    print("G(Attr{}) = ".format(i), end="")
+    print(math.ganancia(table.getCol(i,validRows,validCols),targetAttribute))
 
-
+def ID3(validRows,validCols):
+    targetAttribute = table.getDecisionCol(validRows,validCols)
+    mayorGanancia = 0
+    attrMayorGanancia = 0
+    
+    for i in range(6):
+        g = math.ganancia(table.getCol(i,validRows,validCols),targetAttribute)
+        if g > mayorGanancia:
+            mayorGanancia = g
+            attrMayorGanancia = i
+    print(i)
+    t = Tree(i,False)
 
 def askForTable(attr):
     more = True

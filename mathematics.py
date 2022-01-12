@@ -24,7 +24,7 @@ def ocurrencias(l, item):
             indices.append(i)
     return indices
 
-def entropiaRelativaPosAttribute(values, s, listOcurrencias):
+def entropiaRelativa(values, s, listOcurrencias):
     d = dict.fromkeys(s,0) # Frecuencias de ese atributo en cada valor del atributo target
     times = len(listOcurrencias)
 
@@ -38,14 +38,14 @@ def entropiaRelativaPosAttribute(values, s, listOcurrencias):
         res = res - (prob * log(prob))
     return res
 
-def entropiaRelativa(values, s):
-
+def ganancia(values, s):
+    print(values)
     resultado = 0
     nValues = len(values)
 
     for value in dict.fromkeys(values):
-        print("Para el valor",value)
+        # print("Para el valor",value)
         listOcurrencias = ocurrencias(values,value)
-        res = entropiaRelativaPosAttribute(values,s,listOcurrencias)
+        res = entropiaRelativa(values,s,listOcurrencias)
         resultado = resultado - res * (len(listOcurrencias)/nValues)
     return entropia(s) + resultado
