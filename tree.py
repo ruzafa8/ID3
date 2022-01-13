@@ -16,4 +16,3 @@ class Tree:
         while i < len(self.values) and value != self.values[i]:
             i = i + 1
         return None if i == len(self.values) else self.trees[i]
-    
