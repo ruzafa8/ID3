@@ -23,6 +23,7 @@ class DecisionTree:
 
         targetAttribute = self.table.getDecisionCol(validRows,validCols)
 
+        # If all elements in the target attribute are the same, we stop
         if(all(element == targetAttribute[0] for element in targetAttribute)):
             return Tree(targetAttribute[0],True)
         elif any(validCols[:-1]):
@@ -74,7 +75,6 @@ class DecisionTree:
     
     def drawDecisionTree(self):
         DecisionTree.showWithLevel(self.tree, 0)
-        # showWithLevel(self.tree, 0)
 
     def prediction(self, predicts):
         lines = csv.reader(predicts)
@@ -90,16 +90,16 @@ class DecisionTree:
         return res
 
     @classmethod
-    def showWithLevel(self,arbol, level):
+    def showWithLevel(self, arbol, level):
         if arbol.isLeaf:
-            for i in range(level):
+            for _ in range(level):
                 print("\t", end="")
             print("Output: " + str(arbol.attribute))
         else:
             for value in arbol.values:
-                for i in range(level):
+                for _ in range(level):
                     print("\t", end="")
                 print("Attribute"+str(arbol.attribute), end=": ")
                 print(value)
-                DecisionTree.showWithLevel(arbol.getChildren(value),level+1)
+                DecisionTree.showWithLevel(arbol.getChildren(value), level+1)
 
