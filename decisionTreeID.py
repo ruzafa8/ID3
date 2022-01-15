@@ -22,7 +22,7 @@ class DecisionTree:
     def ID3(self,validRows,validCols):
 
         targetAttribute = self.table.getDecisionCol(validRows,validCols)
-        print(targetAttribute)
+
         if(all(element == targetAttribute[0] for element in targetAttribute)):
             return Tree(targetAttribute[0],True)
         elif any(validCols[:-1]):
@@ -33,15 +33,12 @@ class DecisionTree:
             for i in range(self.numCols - 1): 
                 if validCols[i]:
                     g = math.ganancia(self.table.getCol(i,validRows,validCols),targetAttribute)
-                    print("G(Attr{}) = ".format(i), end="")
-                    print(math.ganancia(self.table.getCol(i,validRows,validCols),targetAttribute))
 
                     # Take the attribute with the bigger ganance.
                     if g >= mayorGanancia:
                         mayorGanancia = g
                         attrMayorGanancia = i
 
-            print("And the winner is: Attr",attrMayorGanancia, "->", mayorGanancia)
             tree = Tree(attrMayorGanancia,False)
             
             colMayorGanancia = self.table.getCol(attrMayorGanancia,validRows,validCols)
@@ -64,7 +61,6 @@ class DecisionTree:
                 tree.addChildren(value, self.ID3(cpyValidRows,cpyValidCols))
             return tree
         else:
-            print("No hay más attributes: ", targetAttribute)
             # For each value of the target attribute see the one that is more frequent
             biggest = 0
             mostRepeatedValue = 0
@@ -73,7 +69,7 @@ class DecisionTree:
                 if biggest < ocurrence:
                     biggest = ocurrence
                     mostRepeatedValue = value
-            print("AN DA WINER IS:", mostRepeatedValue)
+
             return Tree(mostRepeatedValue,True)
     
     def drawDecisionTree(self):

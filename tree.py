@@ -21,11 +21,6 @@ class Tree:
         if (self.isLeaf):
             return self.attribute
         else:
-            print("----------------------------")
-            print(self.attribute)
-            print(self.values)
-            print(elementos)
             rama = elementos[self.attribute]
-            print(rama)
             i = self.values.index(rama)
             return self.trees[i].predict(elementos)
