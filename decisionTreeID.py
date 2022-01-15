@@ -6,8 +6,6 @@ import csv
 
 class DecisionTree:
 
-
-
     def learnDT(self,csvFile):
         reader = csv.reader(open(csvFile,"rt"), delimiter=",")
         read = list(reader)
@@ -19,18 +17,12 @@ class DecisionTree:
         validRows = [True] * numRows
         validCols = [True] * self.numCols
 
-        self.i = 0
         self.tree = self.ID3(validRows, validCols)
 
     def ID3(self,validRows,validCols):
-        self.i = self.i + 1
-        print("iterations", self.i)
-        print("validRows", validRows)
-        print("validCols", validCols)
-        print("Table", self.table.printTable(validRows, validCols))
 
         targetAttribute = self.table.getDecisionCol(validRows,validCols)
-        
+        print(targetAttribute)
         if(all(element == targetAttribute[0] for element in targetAttribute)):
             return Tree(targetAttribute[0],True)
         elif any(validCols[:-1]):
@@ -53,11 +45,12 @@ class DecisionTree:
             tree = Tree(attrMayorGanancia,False)
             
             colMayorGanancia = self.table.getCol(attrMayorGanancia,validRows,validCols)
+            colMayorGananciaAbs = self.table.getColTotal(attrMayorGanancia)
 
             # For each value of the attribute with the biggest ganance.
             for value in dict.fromkeys(colMayorGanancia):
                 # Remove rows from the values of the attribute different for the selected one
-                rowsToKeep = math.ocurrencias(colMayorGanancia,value)
+                rowsToKeep = math.ocurrencias(colMayorGananciaAbs,value)
                 cpyValidRows = validRows[:]
                 for i in range(len(cpyValidRows)):
                     if not i in rowsToKeep:
@@ -88,18 +81,17 @@ class DecisionTree:
         # showWithLevel(self.tree, 0)
 
     def prediction(self, predicts):
-        lector = csv.reader(predicts, delimiter=",")
-        elementos = list(lector)[:-1]
-        self.predict(elementos)
+        lines = csv.reader(predicts)
+        res = []
+        for line in lines:
+            x = csv.reader(line)
+            l = list(x)
+            predict = []
+            for x in l:
+                predict.append(x[0])
 
-    def predict(self,elementos):
-        if (self.tree.isLeaf):
-            print(self.attribute)
-        elif elementos == []:
-            raise Exception()
-        else:
-            self.tree.getChildren(elementos[0]).predict(elementos[1:])       
-
+            res.append(self.tree.predict(predict))
+        return res
 
     @classmethod
     def showWithLevel(self,arbol, level):
@@ -114,11 +106,4 @@ class DecisionTree:
                 print("Attribute"+str(arbol.attribute), end=": ")
                 print(value)
                 DecisionTree.showWithLevel(arbol.getChildren(value),level+1)
-#showWithLevel :: Tree -> Int -> [Char]
-#showWithLevel (Leaf f) lvl =  "Output: " ++ show f
-#showWithLevel (Node l r v) lvl = 
-#    "Node x < " ++ show v ++ ":\n" ++ 
-#    duplicate "\t" lvl ++ "- Left " ++
-#    showWithLevel l (lvl+1) ++ "\n" ++ 
-#    duplicate "\t" lvl ++ "- Right " ++ showWithLevel r (lvl+1)
 

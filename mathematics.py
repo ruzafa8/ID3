@@ -5,6 +5,9 @@ def log(x):
     else:
          return math.log(x,2)
 
+def rajoy(x,y):
+    return -(x/(x+y))*log((x/(x+y))) -(y/(x+y))*log((y/(x+y)))
+
 def entropia(x):
     res = 0
     d = dict.fromkeys(x,0) # Frecuencias de valores de atributos
@@ -24,7 +27,7 @@ def ocurrencias(l, item):
             indices.append(i)
     return indices
 
-def entropiaRelativa(values, s, listOcurrencias):
+def entropiaRelativa(s, listOcurrencias):
     d = dict.fromkeys(s,0) # Frecuencias de ese atributo en cada valor del atributo target
     times = len(listOcurrencias)
 
@@ -45,6 +48,18 @@ def ganancia(values, s):
     for value in dict.fromkeys(values):
         # print("Para el valor",value)
         listOcurrencias = ocurrencias(values,value)
-        res = entropiaRelativa(values,s,listOcurrencias)
+        res = entropiaRelativa(s,listOcurrencias)
         resultado = resultado - res * (len(listOcurrencias)/nValues)
     return entropia(s) + resultado
+
+def flatten_list(_2d_list):
+    flat_list = []
+    # Iterate through the outer list
+    for element in _2d_list:
+        if type(element) is list:
+            # If the element is of type list, iterate through the sublist
+            for item in element:
+                flat_list.append(item)
+        else:
+            flat_list.append(element)
+    return flat_list

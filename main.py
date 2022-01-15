@@ -1,7 +1,14 @@
 from decisionTreeID import DecisionTree as dt
 
-
 tree = dt()
-tree.learnDT("table.csv")
+tree.learnDT("datos.csv")
 tree.drawDecisionTree()
-tree.prediction("baja,alto,bajo,no,no")
+pred = tree.prediction(['bajo,rubio,marrones',
+                        'alto,moreno,marrones',
+                        'alto,rubio,azules',
+                        'alto,moreno,azules',
+                        'bajo,moreno,azules',
+                        'alto,rojo,azules',
+                        'alto,rubio,marrones',
+                        'bajo,rubio,azules'])
+print(pred)

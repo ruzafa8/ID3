@@ -16,3 +16,16 @@ class Tree:
         while i < len(self.values) and value != self.values[i]:
             i = i + 1
         return None if i == len(self.values) else self.trees[i]
+
+    def predict(self,elementos):
+        if (self.isLeaf):
+            return self.attribute
+        else:
+            print("----------------------------")
+            print(self.attribute)
+            print(self.values)
+            print(elementos)
+            rama = elementos[self.attribute]
+            print(rama)
+            i = self.values.index(rama)
+            return self.trees[i].predict(elementos)

@@ -19,6 +19,14 @@ class Table:
                 res.append(self.values[i][x])
         return res
 
+        
+    def getColTotal(self, x):
+        res = []
+
+        for i in range(0, len(self.values)):
+            res.append(self.values[i][x])
+        return res
+
     #def getRow(self, x):
     #    res = []
     #    for i in range(0, len(self.values[x])):
