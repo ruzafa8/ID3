@@ -13,3 +13,5 @@ pred = tree.prediction(['bajo,rubio,marrones',
                         'bajo,rubio,azules',
                         'bajo,moreno,marrones'])
 print(pred)
+
+
